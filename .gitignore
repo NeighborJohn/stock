@@ -162,3 +162,5 @@ log/
 test/
 .mariadb/
 /mariadb/
+
+.sisyphus/
