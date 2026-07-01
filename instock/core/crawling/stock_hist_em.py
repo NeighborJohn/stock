@@ -25,7 +25,9 @@ def stock_zh_a_spot_em() -> pd.DataFrame:
     :return: 实时行情
     :rtype: pandas.DataFrame
     """
-    url = "http://82.push2.eastmoney.com/api/qt/clist/get"
+    # Old endpoint kept for quick rollback/reference:
+    # url = "http://82.push2.eastmoney.com/api/qt/clist/get"
+    url = "https://push2.eastmoney.com/webguest/api/qt/clist/get"
     page_size = 50
     page_current = 1
     params = {
@@ -614,4 +616,3 @@ if __name__ == "__main__":
         adjust="hfq",
     )
     print(stock_zh_a_hist_df)
-
