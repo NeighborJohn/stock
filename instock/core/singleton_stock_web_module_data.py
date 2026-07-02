@@ -212,6 +212,17 @@ class stock_web_module_data(metaclass=singleton_type):
             is_realtime=False,
             order_columns=f"(SELECT `datetime` FROM `{tbs.TABLE_CN_STOCK_ATTENTION['name']}` WHERE `code`=`{tbs.TABLE_CN_STOCK_SPOT_BUY['name']}`.`code`) AS `cdatetime`",
             order_by=" `cdatetime` DESC"
+        ), wmd.web_module_data(
+            mode="query",
+            type="热门概念",
+            ico="fa fa-line-chart",
+            name="盘中热门概念走势",
+            table_name="hot_concept_dashboard",
+            columns=(),
+            column_names=[],
+            primary_key=[],
+            is_realtime=True,
+            url="/instock/hot_concept"
         )]
 
         for table in tbs.TABLE_CN_STOCK_STRATEGIES:
