@@ -179,10 +179,15 @@ def build_hot_concept_dashboard(
         effective_metric_min,
         effective_metric_max,
     )
-    filtered_latest_concepts.sort(
+    metric_ranked_concepts = sorted(
+        filtered_latest_concepts,
+        key=lambda row: _concept_order_key(row, request['metric'], 'desc'),
+    )
+    top_metric_concept = metric_ranked_concepts[0] if metric_ranked_concepts else None
+    displayed_concepts = metric_ranked_concepts[:request['concept_top_n']]
+    displayed_concepts.sort(
         key=lambda row: _concept_order_key(row, request['sort_metric'], request['sort_order'])
     )
-    displayed_concepts = filtered_latest_concepts[:request['concept_top_n']]
 
     selected_name = request['selected_concept']
     selected_type = request['selected_concept_type']
@@ -225,6 +230,7 @@ def build_hot_concept_dashboard(
         'available_metric_min': available_metric_min,
         'available_metric_max': available_metric_max,
         'latest_snapshot_time': latest_snapshot_time,
+        'top_metric_concept': top_metric_concept,
         'selected_concept': selected_name,
         'selected_concept_type': selected_type,
         'selected_concept_key': _concept_identity(selected_type, selected_name),
@@ -264,6 +270,7 @@ def build_no_data(request: dict[str, Any] | None = None) -> dict[str, Any]:
         'available_metric_min': normalized_request.get('available_metric_min'),
         'available_metric_max': normalized_request.get('available_metric_max'),
         'latest_snapshot_time': None,
+        'top_metric_concept': None,
         'selected_concept': normalized_request.get('selected_concept'),
         'selected_concept_type': normalized_request.get('selected_concept_type'),
         'selected_concept_key': _concept_identity(

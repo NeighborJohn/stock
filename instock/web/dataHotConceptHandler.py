@@ -345,7 +345,7 @@ def _summary_cards(view_model: dict[str, Any]) -> list[dict[str, str]]:
     concepts = view_model.get('concepts') or []
     trend_rows = view_model.get('concept_trend_rows') or []
     snapshot_times = sorted({row.get('snapshot_time') for row in trend_rows if row.get('snapshot_time')})
-    hottest = concepts[0] if concepts else {}
+    hottest = view_model.get('top_metric_concept') or (concepts[0] if concepts else {})
     hottest_label = _text(hottest.get('concept_name'))
     if hottest.get('concept_type'):
         hottest_label = f"{hottest.get('concept_type')} {hottest_label}".strip()
